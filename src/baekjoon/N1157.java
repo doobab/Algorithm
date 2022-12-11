@@ -1,0 +1,43 @@
+package baekjoon;
+
+import java.util.Scanner;
+
+/*
+문제
+알파벳 대소문자로 된 단어가 주어지면, 이 단어에서 가장 많이 사용된 알파벳이 무엇인지 알아내는 프로그램을 작성하시오. 단, 대문자와 소문자를 구분하지 않는다.
+
+입력
+첫째 줄에 알파벳 대소문자로 이루어진 단어가 주어진다. 주어지는 단어의 길이는 1,000,000을 넘지 않는다.
+
+출력
+첫째 줄에 이 단어에서 가장 많이 사용된 알파벳을 대문자로 출력한다. 단, 가장 많이 사용된 알파벳이 여러 개 존재하는 경우에는 ?를 출력한다.
+ */
+
+public class N1157 {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next().toUpperCase();
+        // 알파벳 배열
+        int[] arr = new int[26];
+        // 해당 알파벳이 포함된 개수
+        for (int i = 0; i < str.length(); i++){
+            arr[(int)(str.charAt(i) - 'A')]++;
+        }
+
+        // 최댓값
+        int max = 0;
+        int max_index = -1;
+        for (int i = 0; i < 26; i++){
+            // arr[i]가 최댓값보다 크다면
+            if (max < arr[i]){
+                max = arr[i];
+                max_index = i;
+            }
+            // 최댓값과 같은 경우 max_index 초기화
+            else if (max == arr[i]){
+                max_index = -1;
+            }
+        }
+        System.out.printf("%c", max_index == -1 ? '?' : (char)(max_index + 'A'));
+    }
+}
