@@ -1,5 +1,7 @@
 package baekjoon;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 /*
@@ -22,21 +24,29 @@ public class N1181 {
         String[] arr = new String[n];
         for (int i = 0; i < n; i++){
             arr[i] = sc.next();
-            for (int j = 0; j < i; j++){
-                if (arr[j].length() > arr[i].length()){
-                    sort(arr, j, i - 1);
-                    arr[j] = arr[i];
-                    break;
+        }
+
+        // 정렬
+        Arrays.sort(arr, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                // 길이가 같을 때
+                if (s1.length() == s2.length()){
+                    if(s1.compareTo(s2) > 0) {
+                        return 1;
+                    } else if(s1.compareTo(s2) < 0) {
+                        return -1;
+                    }
                 }
+                return s1.length() - s2.length();
             }
-        }
+        });
+
+        // 출력
         for (int i = 0; i < n; i++){
-            System.out.printf("%s ", arr[i]);
-        }
-    }
-    static void sort(String[] arr, int start_index, int end_index){
-        for (int i = end_index; i > start_index; i--){
-            arr[i + 1] = arr[i];
+            if (i > 0 && arr[i].equals(arr[i - 1]))
+                continue;
+            System.out.println(arr[i]);
         }
     }
 }
