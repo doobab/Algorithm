@@ -27,22 +27,39 @@ public class N2108 {
         int n = sc.nextInt();
         int[] arr = new int[n];
         double avg = 0;
-        int min = 4000;
-        int max = -4000;
+        // 빈도 수
+        int[] count = new int[8001];
+
         for (int i = 0; i < n; i++){
             arr[i] = sc.nextInt();
             // 산술 평균을 위해 더하기
             avg += arr[i];
-            // 범위를 위해 최댓값과 최솟값 구하기
-            if (min > arr[i])
-                min = arr[i];
-            else if (max < arr[i])
-                max = arr[i];
+            // 최빈값 count
+            count[arr[i] + 4000]++;
+        }
+
+        int count_max = 0;
+        int count_max_index = -1;
+        boolean flag = false;
+        for (int i = 0; i < 8001; i++) {
+            if (count[i] == 0){
+                continue;
+            }
+            if (count_max < count[i]){
+                count_max = count[i];
+                count_max_index = i;
+                flag = true;
+            }
+            else if (count_max == count[i] && flag){
+                count_max_index = i;
+                flag = false;
+            }
         }
         // 산술평균
         avg /= n;
         // 중앙값을 구하기 위해 정렬
         Arrays.sort(arr);
 
+        System.out.printf("%d\n%d\n%d\n%d", (int)Math.round(avg), arr[n/2], count_max_index - 4000, arr[n - 1] - arr[0]);
     }
 }
